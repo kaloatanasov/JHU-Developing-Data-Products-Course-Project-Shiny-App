@@ -1,0 +1,59 @@
+---
+title: 'ShinyApp: </br>Predict Diamond Carat from Price'
+author: "Kaloyan Atanasov"
+date: "July 17, 2018"
+output: ioslides_presentation
+---
+
+## Predict Diamond Carat from Price
+
+This Shiny app was created to predict the carat of a dimond, based on the price that the customer is willing to pay.
+
+The user can simply move the slider left and right, select the price he/she is willing to pay for a diamond, and find out what its carat would be. The calculation is done in the Plot section.
+
+This Shiny app uses the Diamonds dataset, pre-loaded in R. The monetary limit ranges from $300 to $20,000. As a default price has been chosen $5,051, as the average spending limit preffered by a customer.
+
+## Files accessibility
+
+Now that you know what the app does, don't hesitate to give it a try. You can access the interactive version on ShinyApp.io, or check out all the project files (including the one for the current presentation) on GitHub.
+
+**Link to the app on ShinyApp.io:**
+
+https://kaloatanasov.shinyapps.io/courseProjectApp/
+
+**Link to the project files on GitHub:**
+
+https://github.com/kaloatanasov/JHU-Developing-Data-Products-Course-Project-Shiny-App
+
+## Modeling data
+
+The ShinyApp uses Nonlinear Least Squares model for more accurate prediction of diamond carat.
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+model <- nls(carat ~ a*price^b, data = diamonds, start = list(a=1,b=1))
+
+plot(diamonds$price, diamonds$carat, col = "grey",
+     xlab = "Diamond Price", ylab = "Diamond Carat", bty = "n", pch = 16,
+     xlim = c(300, 20000), ylim = c(0.1, 5.05),
+     main = "Predict Diamond Carat from Price with NLS Model")
+
+lines(diamonds$price, predict(model), type = "l", lwd = 0.1)
+```
+
+## Diamonds dataset credits
+
+***Prices of 50,000 round cut diamonds***
+
+*Description:*
+
+*A dataset containing the prices and other attributes of almost 54,000 diamonds.*
+
+*Usage:*
+
+*diamonds*
+
+*Format:*
+
+*A data frame with 53940 rows and 10 variables.*
